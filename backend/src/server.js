@@ -83,10 +83,16 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 if (process.env.NODE_ENV === "production") {
-  const frontendPath = path.join(__dirname, "../../frontend/dist");
+  const frontendPath = path.resolve("../frontend/dist"); // absolute path from backend folder
+  console.log("Serving frontend from:", frontendPath);
+
   app.use(express.static(frontendPath));
-  app.get(/^\/(?!api).*/, (req, res) => {
-    res.sendFile(path.join(frontendPath, "index.html"));
+
+  app.get("*", (req, res) => {
+    // If request is not /api/*, serve React index.html
+    if (!req.path.startsWith("/api")) {
+      res.sendFile(path.join(frontendPath, "index.html"));
+    }
   });
 }
 
