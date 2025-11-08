@@ -83,11 +83,9 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 if (process.env.NODE_ENV === "production") {
-  const frontendPath = path.join(__dirname, "../../frontend/dist"); // Vite build
+  const frontendPath = path.join(__dirname, "../../frontend/dist");
   app.use(express.static(frontendPath));
-
-  // Use regex for wildcard route
-  app.get(/^(?!\/api).*/, (req, res) => {
+  app.get(/^\/(?!api).*/, (req, res) => {
     res.sendFile(path.join(frontendPath, "index.html"));
   });
 }
