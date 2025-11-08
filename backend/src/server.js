@@ -83,11 +83,12 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 if (process.env.NODE_ENV === "production") {
-  app.use(express.static(path.join(__dirname, "../../frontend/dist"))); // Vite build folder
-  // For CRA: "../../frontend/build"
+  const frontendPath = path.join(__dirname, "../../frontend/dist"); // Vite build
+  app.use(express.static(frontendPath));
 
-  app.get("*", (req, res) => {
-    res.sendFile(path.resolve(__dirname, "../../frontend/dist", "index.html"));
+  // Use regex for wildcard route
+  app.get(/^(?!\/api).*/, (req, res) => {
+    res.sendFile(path.join(frontendPath, "index.html"));
   });
 }
 
