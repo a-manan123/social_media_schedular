@@ -942,5 +942,5 @@ The following indexes are implemented for optimal query performance:
 MIT License - feel free to use this project for learning or commercial purposes.
 
 **Built with ❤️ using the MERN stack**
-#   S o c i a l _ M e d i a _ S c h e d u l a r  
- 
+
+#

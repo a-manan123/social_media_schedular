@@ -37,24 +37,27 @@ app.use(
     origin: (origin, callback) => {
       // Allow requests with no origin (like mobile apps or curl requests)
       if (!origin) return callback(null, true);
-      
+
       // In development, allow any localhost origin
       if (process.env.NODE_ENV !== "production") {
-        if (origin.startsWith("http://localhost:") || origin.startsWith("http://127.0.0.1:")) {
+        if (
+          origin.startsWith("http://localhost:") ||
+          origin.startsWith("http://127.0.0.1:")
+        ) {
           return callback(null, true);
         }
       }
-      
+
       // Check against allowed origins (for production or specific URLs)
       if (allowedOrigins.length > 0 && allowedOrigins.indexOf(origin) !== -1) {
         return callback(null, true);
       }
-      
+
       // Default: allow if no specific origins configured (development fallback)
       if (allowedOrigins.length === 0) {
         return callback(null, true);
       }
-      
+
       callback(new Error("Not allowed by CORS"));
     },
     credentials: true,
